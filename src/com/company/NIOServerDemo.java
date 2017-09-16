@@ -42,14 +42,14 @@ public class NIOServerDemo {
             Iterator<SelectionKey> iterator = selectionKeys.iterator();
             while (iterator.hasNext()) {
                 //this is the event loop
-                SelectionKey selectionKey = iterator.next();
+                SelectionKey key = iterator.next();
                 iterator.remove();
-                handleKey(selectionKey);
+                handleEvent(key);
             }
         }
     }
 
-    private void handleKey(SelectionKey selectionKey) throws IOException {
+    private void handleEvent(SelectionKey selectionKey) throws IOException {
         ServerSocketChannel server;
         SocketChannel client;
         String receiveText;
@@ -66,6 +66,7 @@ public class NIOServerDemo {
             receiveBuffer.clear();
             count = client.read(receiveBuffer);
             if (count > 0) {
+                receiveBuffer.flip();
                 receiveText = new String(receiveBuffer.array(), 0, count);
                 System.out.println("Received :" + receiveText);
                 received = receiveText;
@@ -80,7 +81,6 @@ public class NIOServerDemo {
         } else if (selectionKey.isWritable()) {
             client = (SocketChannel) selectionKey.channel();
             ByteBuffer sendBuffer = buffers.get(Integer.valueOf(client.socket().hashCode()));
-            sendBuffer.flip();
             client.write(sendBuffer);
             client.register(selector, SelectionKey.OP_READ);
         }
