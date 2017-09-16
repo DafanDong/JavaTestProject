@@ -71,15 +71,14 @@ public class ForkJoinDemo extends RecursiveTask<Long> {
             ForkJoinPool forkJoinPool = new ForkJoinPool();
             Future<Long> future = forkJoinPool.submit(quickSort);
 
-            Long res = future.get();
-            System.out.println(Arrays.toString(arrays));
-
-            System.out.println("Total execute times: " + res);
-            threads.forEach((k, v) -> System.out.printf("ID: %d, Value: %s.\n", k, v));
-
             System.out.printf("Thread Count: %d\n", forkJoinPool.getActiveThreadCount());
             System.out.printf("Thread Steal: %d\n", forkJoinPool.getStealCount());
-            System.out.printf("Parallelism: %d\n", forkJoinPool.getParallelism());            forkJoinPool.shutdown();
+            System.out.printf("Parallelism: %d\n", forkJoinPool.getParallelism());
+
+            Long res = future.get();
+            System.out.println(Arrays.toString(arrays));
+            System.out.println("Total called times: " + res);
+            threads.forEach((k, v) -> System.out.printf("\tID: %d, Value: %s.\n", k, v));
 
             forkJoinPool.shutdown();
         } catch (Exception e) {
