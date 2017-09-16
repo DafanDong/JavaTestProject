@@ -18,7 +18,6 @@ public class NIOServerDemo {
     static private int PORT = 8888;
     Map<Integer, ByteBuffer> buffers = new HashMap();
     private Selector selector;
-    private String received;
 
     public NIOServerDemo() throws IOException {
         ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
@@ -69,7 +68,6 @@ public class NIOServerDemo {
                 receiveBuffer.flip();
                 receiveText = new String(receiveBuffer.array(), 0, count);
                 System.out.println("Received :" + receiveText);
-                received = receiveText;
                 client.register(selector, SelectionKey.OP_WRITE);
             }
             else {
