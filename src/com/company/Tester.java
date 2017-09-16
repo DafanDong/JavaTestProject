@@ -5,7 +5,7 @@ import java.util.Base64;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-public class Main {
+public class Tester {
 
     public static String compress(String str) {
         if (str == null || str.length() == 0) {
@@ -60,10 +60,10 @@ public class Main {
         byte[] encodedBytes = Base64.getEncoder().encode(out.getBytes());
         System.out.println("after compress:\n" + new String(encodedBytes));
 */
-        String out = Main.compress(string);
+        String out = Tester.compress(string);
         System.out.println("after compress:\n" + out);
 
-        string = Main.decompress(out);
+        string = Tester.decompress(out);
         System.out.println("after decompress:\n" + string);
 
 
