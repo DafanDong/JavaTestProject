@@ -7,9 +7,11 @@ import java.net.Socket;
 
 public class MultiThreadServer implements Runnable {
     private Socket socket;
+
     MultiThreadServer(Socket socket) {
         this.socket = socket;
     }
+
     public static void main(String args[]) throws Exception {
         ServerSocket serverSock = new ServerSocket(1234);
         System.out.println("Listening");
@@ -20,6 +22,7 @@ public class MultiThreadServer implements Runnable {
             new Thread(new MultiThreadServer(sock)).start();
         }
     }
+
     public void run() {
         System.out.println("Invoke -> " + Thread.currentThread().getName());
         try {

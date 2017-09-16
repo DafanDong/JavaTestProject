@@ -1,9 +1,10 @@
 package com.company;
+
 import java.io.*;
-import java.io.IOException;
+import java.util.Base64;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
-import java.util.Base64;
+
 public class Main {
 
     public static String compress(String str) {
@@ -17,12 +18,11 @@ public class Main {
             gzip.close();
             String res = Base64.getEncoder().encodeToString(out.toByteArray());
             return res;
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
     }
+
     public static String decompress(String str) {
         if (str == null || str.length() == 0) {
             return str;
@@ -35,16 +35,14 @@ public class Main {
             BufferedReader br = new BufferedReader(new InputStreamReader(gis, "UTF-8"));
             StringBuilder sb = new StringBuilder();
             String line;
-            while((line = br.readLine()) != null) {
+            while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
             br.close();
             gis.close();
             bis.close();
             return sb.toString();
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             return null;
         }
     }
