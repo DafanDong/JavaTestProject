@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -23,11 +25,14 @@ public class ThreadPoolServer {
             {
                 System.out.println("Invoke -> " + Thread.currentThread().getName());
                 try {
-                    PrintStream stream = new PrintStream(socket.getOutputStream());
-                    for (int i = 10; i >= 0; i--) {
-                        stream.println(i + " bottles of beer on the wall");
+                    InputStream in = socket.getInputStream();
+                    OutputStream out = socket.getOutputStream();
+                    byte[] b = new byte[4 * 1024];
+                    int len;
+                    while ((len = in.read(b)) >= 0) {
+                        out.write(b, 0, len);
                     }
-                    stream.close();
+                    System.out.println("Remote client close");
                     socket.close();
                 } catch (IOException e) {
                     System.out.println(e);

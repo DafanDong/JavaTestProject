@@ -35,6 +35,7 @@ public class MultiThreadServer implements Runnable {
                 out.write(b, 0, len);
             }
             System.out.println("Remote client close");
+            socket.close();
         } catch (IOException e) {
             System.out.println(e);
         }
